@@ -98,7 +98,8 @@ def main(
     engine = create_engine(f"postgresql://{pg_user}:{pg_pass}@{pg_host}:{pg_port}/{pg_db}")
     file_name = f"yellow_tripdata_{year}-{month:02d}.csv.gz"
 
-    file_path = Path("data") / file_name
+    project_dir = Path(__file__).resolve().parent
+    file_path = project_dir / "data" / file_name
 
     ingest_data(
         file_path=file_path,
