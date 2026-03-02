@@ -10,7 +10,7 @@ WHERE
 	AND t."DOLocationID" = zdo."LocationID"
 LIMIT 100;
 
-# Implicit join is not recommened, it is better to use explicit JOIN syntax.
+# Implicit join is not recommended, it is better to use explicit JOIN syntax.
 
 SELECT
 	t.tpep_pickup_datetime,
@@ -26,6 +26,8 @@ WHERE
 	t."PULocationID" = zpu."LocationID"
 	AND t."DOLocationID" = zdo."LocationID"
 LIMIT 100;
+
+
 
 # The same query but with explicit JOIN syntax, which is more readable and less error-prone:
 SELECT
@@ -155,3 +157,8 @@ ORDER BY
     "day" ASC,
     "DOLocationID" ASC
 LIMIT 100;
+
+
+SELECT *
+FROM zones
+LIMIT 10;
