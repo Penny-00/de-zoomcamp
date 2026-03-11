@@ -62,6 +62,8 @@ services:
       - kestra_data:/app/storage
       - /var/run/docker.sock:/var/run/docker.sock
       - kestra_tmp:/tmp/kestra-wd
+    env_file:
+      - .env_encoded
     environment:
       KESTRA_CONFIGURATION: |
         datasources:

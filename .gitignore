@@ -1,9 +1,16 @@
 *.parquet
 *.csv
+*.json
 *.gz
 *.sqlite
 *.db
 *.vscode/
+
+# Environment Variables
+.env_encoded
+service_account.json
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
