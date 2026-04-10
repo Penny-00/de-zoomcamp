@@ -15,35 +15,40 @@ services:
   pgdatabase:
     image: postgres:18
     environment:
-      - POSTGRES_USER=root
-      - POSTGRES_PASSWORD=root
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - POSTGRES_DB=ny_taxi
     volumes:
-      - ny_taxi_postgres_data:/var/lib/postgresql
+      - ny_taxi_postgres_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+    healthcheck:  # FIX: added healthcheck for proper readiness
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5  
 
   pgadmin:
     image: dpage/pgadmin4
     environment:
-      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
-      - PGADMIN_DEFAULT_PASSWORD=root
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_EMAIL}     
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_PASSWORD}
     volumes:
       - pgadmin_data:/var/lib/pgadmin
     ports:
       - "8085:80"
     depends_on:
       pgdatabase:
-        condition: service_started
+        condition: service_healthy  # FIX: pgadmin should wait for pgdatabase to be healthy before starting
 
   kestra_postgres:
     image: postgres:18
     volumes:
-      - kestra_postgres_data:/var/lib/postgresql
+      - kestra_postgres_data:/var/lib/postgresql/data
     environment:
       POSTGRES_DB: kestra
-      POSTGRES_USER: kestra
-      POSTGRES_PASSWORD: k3str4
+      POSTGRES_USER: ${KESTRA_DB_USER}         # FIX: no hardcoding
+      POSTGRES_PASSWORD: ${KESTRA_DB_PASSWORD}
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
       interval: 30s
@@ -56,11 +61,11 @@ services:
     # Note that this setup with a root user is intended for development purpose.
     # Our base image runs without root, but the Docker Compose implementation needs root to access the Docker socket
     # To run Kestra in a rootless mode in production, see: https://kestra.io/docs/installation/podman-compose
-    user: "root"
+    user: "1000:1000" # FIX: run as non-root user for better security
     command: server standalone
     volumes:
       - kestra_data:/app/storage
-      - /var/run/docker.sock:/var/run/docker.sock
+      # - /var/run/docker.sock:/var/run/docker.sock 
       - kestra_tmp:/tmp/kestra-wd
     env_file:
       - .env_encoded
@@ -70,13 +75,13 @@ services:
           postgres:
             url: jdbc:postgresql://kestra_postgres:5432/kestra
             driverClassName: org.postgresql.Driver
-            username: kestra
-            password: k3str4
+            username: ${KESTRA_DB_USER}
+            password: ${KESTRA_DB_PASSWORD}
         kestra:
           server:
             basicAuth:
-              username: "admin@kestra.io"  #it must be a valid email address
-              password: Admin1234!
+              username: ${KESTRA_ADMIN_EMAIL}   # FIX: no hardcoding, must be a valid email for basic auth
+              password: ${KESTRA_ADMIN_PASSWORD}
           repository:
             type: postgres
           storage:
@@ -99,5 +104,5 @@ services:
       - "8081:8081"
     depends_on:
       kestra_postgres:
-        condition: service_started
+        condition: service_healthy
 
