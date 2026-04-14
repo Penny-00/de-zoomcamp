@@ -19,7 +19,7 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - POSTGRES_DB=ny_taxi
     volumes:
-      - ny_taxi_postgres_data:/var/lib/postgresql/data
+      - ny_taxi_postgres_data:/var/lib/postgresql
     ports:
       - "5432:5432"
     healthcheck:  # FIX: added healthcheck for proper readiness
@@ -30,6 +30,8 @@ services:
 
   pgadmin:
     image: dpage/pgadmin4
+    profiles:
+      - tools
     environment:
       - PGADMIN_DEFAULT_EMAIL=${PGADMIN_EMAIL}     
       - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_PASSWORD}
@@ -44,7 +46,7 @@ services:
   kestra_postgres:
     image: postgres:18
     volumes:
-      - kestra_postgres_data:/var/lib/postgresql/data
+      - kestra_postgres_data:/var/lib/postgresql
     environment:
       POSTGRES_DB: kestra
       POSTGRES_USER: ${KESTRA_DB_USER}         # FIX: no hardcoding
@@ -57,7 +59,7 @@ services:
 
   kestra:
     image: kestra/kestra:v1.1
-    pull_policy: always
+    pull_policy: missing
     # Note that this setup with a root user is intended for development purpose.
     # Our base image runs without root, but the Docker Compose implementation needs root to access the Docker socket
     # To run Kestra in a rootless mode in production, see: https://kestra.io/docs/installation/podman-compose
