@@ -5,6 +5,7 @@
 *.sqlite
 *.db
 *.vscode/
+*.md
 
 # Environment Variables
 .env_encoded
