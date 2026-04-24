@@ -59,3 +59,85 @@ SELECT count(*) as trips
 FROM taxi-rides-ny.nytaxi.yellow_tripdata_partitioned_clustered
 WHERE DATE(tpep_pickup_datetime) BETWEEN '2019-06-01' AND '2020-12-31'
   AND VendorID=1;
+
+
+-- Answers  to the assignment questions
+
+-- before creating external table, we need to create a dataset (schema) to hold the table
+CREATE SCHEMA `kestra-sandbox-493016.zoomcamp_dataset`;
+
+-- Create an external table referring to the parquet files in gcs
+CREATE OR REPLACE EXTERNAL TABLE `kestra-sandbox-493016.zoomcamp_dataset.yellow_taxi_external`
+OPTIONS (
+  format = 'PARQUET',
+  uris = [
+    'gs://penny-zoomcamp-taxi-data_0/yellow_tripdata_2024-01.parquet',
+    'gs://penny-zoomcamp-taxi-data_0/yellow_tripdata_2024-02.parquet',
+    'gs://penny-zoomcamp-taxi-data_0/yellow_tripdata_2024-03.parquet',
+    'gs://penny-zoomcamp-taxi-data_0/yellow_tripdata_2024-04.parquet',
+    'gs://penny-zoomcamp-taxi-data_0/yellow_tripdata_2024-05.parquet',
+    'gs://penny-zoomcamp-taxi-data_0/yellow_tripdata_2024-06.parquet'
+  ]
+);
+
+
+-- Check the count of records in the external table
+SELECT COUNT(*) FROM `kestra-sandbox-493016.zoomcamp_dataset.yellow_taxi_external`;
+
+
+-- Create a non partitioned table from external table
+CREATE OR REPLACE TABLE `kestra-sandbox-493016.zoomcamp_dataset.yellow_taxi_regular` AS
+SELECT *
+FROM `kestra-sandbox-493016.zoomcamp_dataset.yellow_taxi_external`;
+
+
+-- Check the count of records in the non partitioned table
+SELECT COUNT(*) AS record_count
+FROM zoomcamp_dataset.yellow_taxi_regular;
+  
+
+-- Check the count of distinct PULocationID in both tables to understand the power of columnar storage
+SELECT COUNT(DISTINCT PULocationID) AS distinct_pulocationids
+FROM zoomcamp_dataset.yellow_taxi_external;
+
+SELECT COUNT(DISTINCT PULocationID) AS distinct_pulocationids
+FROM zoomcamp_dataset.yellow_taxi_regular;
+
+
+-- Check the distinct PULocationID values in the non partitioned table
+SELECT PULocationID
+FROM zoomcamp_dataset.yellow_taxi_regular;
+
+-- Check the distinct PULocationID and DOLocationID values to understand BQ query's cost optimization
+SELECT PULocationID, DOLocationID
+FROM zoomcamp_dataset.yellow_taxi_regular;
+
+
+-- Check the count of zero fare trips in the non partitioned table
+SELECT COUNT(*) AS zero_fare_trips
+FROM zoomcamp_dataset.yellow_taxi_regular
+WHERE fare_amount = 0;
+
+-- Create a partitioned and clustered table from non partitioned table
+CREATE OR REPLACE TABLE `kestra-sandbox-493016.zoomcamp_dataset.yellow_taxi_partitioned_clustered`
+PARTITION BY DATE(tpep_dropoff_datetime)
+CLUSTER BY VendorID AS
+SELECT *
+FROM `kestra-sandbox-493016.zoomcamp_dataset.yellow_taxi_regular`;
+
+
+-- Costing for Original (non-partitioned) table
+SELECT DISTINCT VendorID
+FROM kestra-sandbox-493016.zoomcamp_dataset.yellow_taxi_regular
+WHERE DATE(tpep_dropoff_datetime) BETWEEN '2024-03-01' AND '2024-03-15'
+ORDER BY VendorID;
+
+-- Costing for Partitioned + clustered table
+SELECT DISTINCT VendorID
+FROM kestra-sandbox-493016.zoomcamp_dataset.yellow_taxi_partitioned_clustered
+WHERE DATE(tpep_dropoff_datetime) BETWEEN '2024-03-01' AND '2024-03-15'
+ORDER BY VendorID;
+
+
+SELECT COUNT(*) AS total_records
+FROM kestra-sandbox-493016.zoomcamp_dataset.yellow_taxi_regular;
