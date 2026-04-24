@@ -7,9 +7,10 @@
 *.vscode/
 *.md
 
+
+
 # Environment Variables
 .env_encoded
-service-account.json
 .env
 
 
