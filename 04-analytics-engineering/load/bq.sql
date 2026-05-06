@@ -42,4 +42,4 @@ SELECT COUNT(*) AS yellow_partitioned_count
 FROM `kestra-sandbox-493016.nytaxi.yellow_tripdata_partitioned`;
 
 SELECT COUNT(*) AS green_partitioned_count
-FROM `kestra-sandbox-493016.nytaxi.green_taxi_partitioned`;
+FROM `kestra-sandbox-493016.nytaxi.green_tripdata_partitioned`;
