@@ -1,0 +1,82 @@
+user:
+  outputs:
+    default:
+      keyfile_json:
+        auth_provider_x509_cert_url: https://www.googleapis.com/oauth2/v1/certs
+        auth_uri: https://accounts.google.com/o/oauth2/auth
+        client_email: penny-zoomcamp@kestra-sandbox-493016.iam.gserviceaccount.com
+        client_id: '107469337293046686313'
+        client_x509_cert_url: https://www.googleapis.com/robot/v1/metadata/x509/penny-zoomcamp%40kestra-sandbox-493016.iam.gserviceaccount.com
+        private_key: '-----BEGIN PRIVATE KEY-----
+
+          MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDfpx4Pr+quY2Pb
+
+          kPnc4srSvrnEbUOfw5RCprLXL8HaDS0KO354yoq/5yavnWCcph5lUR7tNqIX367K
+
+          79SJ9W6Z9Fbpdc5IWcqqSJ70FotdRBNX8BhgvQ9zTkHTZFoogciYXV+/OFBZXU8l
+
+          pTBhE53HISPpGQTOpH/mwc4u17/N+xq5JdbYqSnNdWJ2wcOOoAAM3CF0DYeeqx/U
+
+          oMaeYgf3OqdwsHWj9Da5bS+OGjWyJF66YWT4JWa3ZrrYGB1OPdKnqGAeGTqwULFz
+
+          lRc0drlbTsHotEIS8htYQmkTjGZdNU4YHAHPGzd4b6oxY6GAAlm3uECcoy80M+1M
+
+          PDrFwVxlAgMBAAECggEABOANynM//HMBBVNUyFZu6+b0Qd53iScYV1dEEjyXBJkM
+
+          GItBSkJGAda40+lXEWBt91uW6ZOq4bYtR1IGMhyrah02ph+nMmdiANIU7vFX3TMD
+
+          m0OJ+yqGiJxV2H+5QbqfLrJoXiYiMD8rChZz+8W+RyMx4cilv228C6xsAWmQDjNx
+
+          i4k7XEQV1W/XmnOaxY36XBlxTj40uK8pKNYsJalJDRnk61eW9M6h4I7NmtPR3Tlo
+
+          b2ykgVzbuFGRWVcwFGxMof0wcsBx/+jYbF9HMdyX+t5kLvvMuoj6h/rTsmCJ91kW
+
+          TcRIg9+Je83JgMxhdiLRJWY60nvRMe9oIui8MTj8CQKBgQD0sNFy72FgDn1VRO6Q
+
+          dY8CG+BctKNF72qxuJ09F76vSl+ZWegeuljxdjV0J+otOfTHx4Iu68czlvjfOTAn
+
+          s99PzYEU5qRmaPgbOsaHF2CtcWbwelKBzeC5rcAR/GbynnHVZEiq76puzxsFGvzs
+
+          lUonYHiH4mpXwPDX/3bHEYsVOQKBgQDp/WD3uHVkIu4g8YPk5N/3dh5bHyorbIV2
+
+          59KPJ9qqbM1QFM9N/GviYrWa0kXUw0fybgMbtIaBKnFK2EIJLO4wP+zi51+rKekc
+
+          SHsDuzjPPy6qs7Ca6+yed3K0DtDtqkumbJvAkmfdUA5ji5aFZXr2+PAlyoyGb+nn
+
+          eRYSuGgMjQKBgQCuP5SH8qw3SVo7dMEmonDaoZteqUx0KxChysQ+k0A5eA8oF3xT
+
+          FYTtPq7GLv52goUsF4k/fKv4sxQ7cnA2dcMbA09e4PhF7Y5xZaOm5CD2ooEZ0yIa
+
+          SdA0qeTTahitweNygN22zMFj85xcQGHI4G9UJ0DuE3CDWWSpjMS68mVHEQKBgGHE
+
+          S9rViL8xVRwQrZJbCzWDdgWOzPjd3BolnLXR6iyhT1vxhfjIym8J3WV2DFVszsf9
+
+          rXDLChQ4HqQuHdFlo5QncZwRHskOtubpZfTWKlN1y9LpR5ZDk1dXA2c2dZeIOxmr
+
+          cZyRz7IJ/CkdruPH1gwRUY4IxpR5eFsOHenugRMVAoGBALk1bKfHhtlVoE+RWhrT
+
+          3Vq4oIMPDSTpIwQN8aa38VqXJyMGWRXeYo7Ev/dan9sX1OWdauUPggDXbt4mX+iX
+
+          +xDnK3NwFxDBjrc3BVG9NPdQadxlwOmi6Djxm1dTgwJxBqjmU3JgquDqrx0GTn2H
+
+          7WObKqK5QtqdpDVL77JaP4YC
+
+          -----END PRIVATE KEY-----
+
+          '
+        private_key_id: 8f7299d108226aacdf6a8898b7b104d9919448c1
+        project_id: kestra-sandbox-493016
+        token_uri: https://oauth2.googleapis.com/token
+        type: service_account
+      method: service-account-json
+      project: kestra-sandbox-493016
+      schema: dbt_penny
+      scopes:
+      - https://www.googleapis.com/auth/bigquery
+      - https://www.googleapis.com/auth/cloud-platform
+      - https://www.googleapis.com/auth/drive
+      - https://www.googleapis.com/auth/userinfo.email
+      target_name: default
+      threads: 4
+      type: bigquery
+  target: default
