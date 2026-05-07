@@ -231,3 +231,4 @@ dbt_packages/
 logs/
 # end dbt Cloud content
 dbt_internal_packages/
+04-analytics-engineering/taxi_rides_ny/profiles.yml
