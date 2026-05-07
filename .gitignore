@@ -242,3 +242,8 @@ target/
 dbt_packages/
 logs/
 # end dbt Cloud content
+dbt_internal_packages/
+
+*profiles.yml
+*copilo.md
+*big_query_assignment.md
