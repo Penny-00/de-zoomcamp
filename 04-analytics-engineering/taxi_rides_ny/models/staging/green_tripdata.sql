@@ -1,1 +1,0 @@
-select * from {{ source('raw_data', 'green_tripdata_partitioned') }}
