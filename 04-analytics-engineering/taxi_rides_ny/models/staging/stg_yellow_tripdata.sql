@@ -13,7 +13,7 @@ select
     store_and_fwd_flag,
     cast(passenger_count as int64) as passenger_count,
     cast(trip_distance as float64) as trip_distance,
-
+    
     -- payment info
     cast(fare_amount as numeric) as fare_amount,
     cast(extra as numeric) as extra,
@@ -25,3 +25,6 @@ select
     cast(payment_type as int64) as payment_type
 
 from {{ source('raw_data', 'yellow_tripdata_partitioned') }}
+
+-- filter out records with null vendor_id (data quality requirement)
+where vendorid is not null
