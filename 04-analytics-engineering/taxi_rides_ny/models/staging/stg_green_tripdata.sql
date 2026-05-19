@@ -21,8 +21,12 @@ select
     cast(mta_tax as numeric) as mta_tax,
     cast(tip_amount as numeric) as tip_amount,
     cast(tolls_amount as numeric) as tolls_amount,
+    cast(ehail_fee as numeric) as ehail_fee,
     cast(improvement_surcharge as numeric) as improvement_surcharge,
     cast(total_amount as numeric) as total_amount,
     cast(payment_type as int64) as payment_type
 
 from {{ source('raw_data', 'green_tripdata_partitioned') }}
+
+-- filter out records with null vendor_id (data quality requirement)
+where vendorid is not null
