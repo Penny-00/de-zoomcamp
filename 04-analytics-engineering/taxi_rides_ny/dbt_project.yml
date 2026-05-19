@@ -9,7 +9,7 @@ dbt-cloud:
 config-version: 2
 
 # This setting configures which "profile" dbt uses for this project.
-profile: 'user'
+profile: 'taxi_rides_ny'
 
 # These configurations specify where dbt should look for different types of files.
 # The `model-paths` config, for example, states that models in this project can be
@@ -38,7 +38,7 @@ clean-targets:         # directories to be removed by `dbt clean`
 # using the `{{ config(...) }}` macro.
 
 models:
-  my_new_project:
+  taxi_rides_ny:
     # Applies to all files under models/example/
     example:
       +materialized: table
