@@ -248,3 +248,4 @@ dbt_internal_packages/
 *copilo.md
 *big_query_assignment.md
 *troubleshooting.md
+*DBT_CORE_MIGRATION.md
