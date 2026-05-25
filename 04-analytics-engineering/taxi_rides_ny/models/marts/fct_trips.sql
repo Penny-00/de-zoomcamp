@@ -1,9 +1,9 @@
 /*
-Todo 
+To do: 
 - One row per trip doesnt matter if yellow or Green
-- Add a primary key (trip_id). It has tobe unique
+- Add a primary key (trip_id). It has to be unique
 - Find all the duplicates, understand why they happen and fix them 
-- Find a way to enrich the column payment_type.
+- Find a way to enrich the column payment_type you'll use provided seeds
 */
 
 
