@@ -1,0 +1,18 @@
+version: 2
+
+models:
+  - name: dim_vendors
+    description: "Dimension table for taxi vendors"
+    columns:
+      - name: vendorid
+        description: "Unique identifier for the taxi vendor"
+      - name: vendor_name
+        description: "Name of the taxi vendor"
+      - name: vendor_address
+        description: "Address of the taxi vendor"
+      - name: vendor_phone
+        description: "Contact phone number for the taxi vendor"
+      - name: created_at
+        description: "Timestamp when the record was created"
+      - name: updated_at
+        description: "Timestamp when the record was last updated"
