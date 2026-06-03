@@ -8,7 +8,7 @@ with trips as (
 vendors as (
     select distinct
         vendor_id,
-        {{ get_vendor_data('vendor_id') }} as vendor_name
+        {{ get_vendor_names('vendor_id') }} as vendor_name
     from trips
 )
 
