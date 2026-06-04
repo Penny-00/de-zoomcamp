@@ -3,7 +3,6 @@ import io
 import dlt
 import requests
 import pandas as pd
-from dlt.sources.incremental import Incremental
 
 CHUNK_SIZE = 100_000
 
@@ -24,14 +23,8 @@ def get_urls():
     write_disposition="append",
     primary_key="file_url",
 )
-def fhv_trips(
-    loaded_files: Incremental[str] = Incremental("file_url")
-):
+def fhv_trips():
     for url in get_urls():
-        if url in loaded_files.last_value:
-            print(f"Skipping (already loaded): {url}")
-            continue
-
         print(f"Loading: {url}")
         response = requests.get(url, stream=True)
         response.raise_for_status()
