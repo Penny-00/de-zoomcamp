@@ -254,3 +254,6 @@ dbt_internal_packages/
 # temporary debug files from bq
 *bq.pcap
 *bq-summary.txt
+
+# dlt
+.dlt/
