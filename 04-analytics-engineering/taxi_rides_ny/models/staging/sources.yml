@@ -103,3 +103,38 @@ sources:
       freshness:
         warn_after: {count: 24, period: hour}
         error_after: {count: 48, period: hour}
+
+  - name: raw_fhv
+    description: Raw FHV trip data from NYC TLC
+    database: |
+      {%- if target.type == 'bigquery' -%}
+        {{ env_var('GCP_PROJECT_ID', 'kestra-sandbox-493016') }}
+      {%- else -%}
+        taxi_rides_ny
+      {%- endif -%}
+    schema: |
+      {%- if target.type == 'bigquery' -%}
+        fhv_2019_eu
+      {%- else -%}
+        prod
+      {%- endif -%}
+    tables:
+      - name: fhv_trips
+        description: Raw FHV trip records for 2019
+        columns:
+          - name: pickup_datetime
+            description: Pickup timestamp
+          - name: drop_off_datetime
+            description: Dropoff timestamp
+          - name: dispatching_base_num
+            description: TLC base license number of dispatching base
+          - name: p_location_id
+            description: Pickup TLC location identifier
+          - name: d_location_id
+            description: Dropoff TLC location identifier
+          - name: sr_flag
+            description: Shared ride flag
+          - name: affiliated_base_number
+            description: Base license number affiliated with trip
+        config:
+          loaded_at_field: pickup_datetime
