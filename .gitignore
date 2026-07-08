@@ -257,8 +257,10 @@ dbt_internal_packages/
 
 # dlt
 .dlt/
-.bruin.yml
 logs/runs
 logs/*.log
 *.py[cod]
 logs/queries
+
+# bruin
+.bruin.yml
