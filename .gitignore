@@ -268,3 +268,5 @@ logs/queries
 # spark artifacts
 *.parquet
 *fhvhv
+*raw
+*pq
